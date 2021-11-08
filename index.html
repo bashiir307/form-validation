@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login page validation</title>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header>Login Page</header>
+    <form action="#">
+      <div class="field email">
+        <div class="input-area">
+          <input type="text" placeholder="Email Address">
+        </div>
+        <div class="error error-txt">Email can't be empty</div>
+      </div>
+      <div class="field password">
+        <div class="input-area">
+          <input type="password" placeholder="Password">
+        </div>
+        <div class="error error-txt">Password can't be empty</div>
+      </div>
+      <div class="pass-txt"><a href="#">Forgot password?</a></div>
+      <input type="submit" value="Login">
+    </form>
+    <div class="sign-txt">Don't have an account? <a href="#">Signup</a></div>
+  </div>
+
+  <script>
+    const form = document.querySelector("form");
+    eField = form.querySelector(".email"),
+    eInput = eField.querySelector("input"),
+    pField = form.querySelector(".password"),
+    pInput = pField.querySelector("input");
+    
+    form.onsubmit = (e)=>{
+      e.preventDefault(); 
+
+      (eInput.value == "") ? eField.classList.add("error") : checkEmail();
+      (pInput.value == "") ? pField.classList.add("error") : checkPass();
+
+
+
+      function checkEmail(){ 
+        let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/; 
+        if(!eInput.value.match(pattern)){ 
+          eField.classList.add("error");
+          eField.classList.remove("valid");
+          let errorTxt = eField.querySelector(".error-txt");
+          
+          (eInput.value != "") ? errorTxt.innerText = "Email not valid" : errorTxt.innerText = "Email can't be blank";
+        }else{ 
+          eField.classList.remove("error");
+          eField.classList.add("valid");
+        }
+      }
+
+      function checkPass(){ 
+        if(pInput.value == ""){ 
+          pField.classList.add("error");
+          pField.classList.remove("valid");
+        }else{ 
+          pField.classList.remove("error");
+          pField.classList.add("valid");
+        }
+      }
+
+      
+      if(!eField.classList.contains("error") && !pField.classList.contains("error")){
+        window.location.href = form.getAttribute("action");
+      }
+    }
+
+  </script>
+
+</body>
+
+</html>
